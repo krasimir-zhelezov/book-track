@@ -1,5 +1,7 @@
 package dev.zhelezov.backend.book;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -18,5 +20,9 @@ public class BookService {
         Book book = modelMapper.map(bookDto, Book.class);
 
         return bookRepository.save(book);
+    }
+
+    public List<Book> getAllBooks() {
+        return bookRepository.findAll();
     }
 }
