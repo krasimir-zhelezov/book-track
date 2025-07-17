@@ -14,10 +14,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping("api/books")
 public class BookController {
+
+    private final BookService bookService;
+
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
+    }
+
     @PostMapping("/")
     public ResponseEntity<Book> createBook(@RequestBody BookDto bookDto) {
-        Book book = new Book(bookDto.getTitle(), bookDto.getAuthor(), bookDto.getIsbn(), bookDto.getGenres());
-
-        return ResponseEntity.ok().body(book);
+        return ResponseEntity.ok().body(bookService.createBook(bookDto));
     }  
 }

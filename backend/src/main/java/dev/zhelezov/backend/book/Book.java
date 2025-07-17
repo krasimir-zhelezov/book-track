@@ -20,6 +20,11 @@ public class Book {
     private List<String> genres;
     // private List<String> chapters;
     // private int pages;
+
+    public Book() {
+        
+    }
+
     public Book(String title, String author, String isbn, List<String> genres) {
         this.title = title;
         this.author = author;
