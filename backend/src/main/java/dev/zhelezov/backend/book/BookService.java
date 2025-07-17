@@ -40,4 +40,13 @@ public class BookService {
                 return bookRepository.save(book);
             });
     }
+
+    public boolean deleteBookById(UUID id) {
+        return bookRepository.findById(id)
+            .map(book -> {
+                bookRepository.delete(book);
+                return true;
+            })
+            .orElse(false);
+    }
 }

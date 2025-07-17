@@ -14,6 +14,7 @@ import java.util.UUID;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,10 +27,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RequestMapping("api/books")
 public class BookController {
 
+    private final BookRepository bookRepository;
+
     private final BookService bookService;
 
-    public BookController(BookService bookService) {
+    public BookController(BookService bookService, BookRepository bookRepository) {
         this.bookService = bookService;
+        this.bookRepository = bookRepository;
     }
 
     @PostMapping("/")
@@ -54,5 +58,10 @@ public class BookController {
         return bookService.updateBookById(id, bookDto)
             .map(ResponseEntity::ok)
             .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteBookById(@PathVariable UUID id) {
+        return bookService.deleteBookById(id) ?  ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 }
