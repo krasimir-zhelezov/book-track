@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.hibernate.annotations.NotFound;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +31,13 @@ public class BookService {
 
     public Optional<Book> getBookById(UUID id) {
         return bookRepository.findById(id);
+    }
+
+    public Optional<Book> updateBookById(UUID id, BookDto bookDto) {
+        return bookRepository.findById(id)
+            .map(book -> {
+                modelMapper.map(bookDto, book);
+                return bookRepository.save(book);
+            });
     }
 }
