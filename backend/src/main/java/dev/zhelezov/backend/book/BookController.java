@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("api/books")
 public class BookController {
     @PostMapping("/")
-    public ResponseEntity<Book> createBook() {
-        Book book = new Book("Dune", "Frank Herbert", "9780441013593", new ArrayList<>(Arrays.asList("sci-fim", "classic")));
+    public ResponseEntity<Book> createBook(@RequestBody BookDto bookDto) {
+        Book book = new Book(bookDto.getTitle(), bookDto.getAuthor(), bookDto.getIsbn(), bookDto.getGenres());
 
         return ResponseEntity.ok().body(book);
     }  
