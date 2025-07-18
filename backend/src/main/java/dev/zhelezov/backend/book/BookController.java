@@ -27,13 +27,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RequestMapping("api/books")
 public class BookController {
 
-    private final BookRepository bookRepository;
-
     private final BookService bookService;
 
-    public BookController(BookService bookService, BookRepository bookRepository) {
+    public BookController(BookService bookService) {
         this.bookService = bookService;
-        this.bookRepository = bookRepository;
     }
 
     @PostMapping("/")

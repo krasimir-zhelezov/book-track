@@ -18,18 +18,20 @@ public class Book {
     private String author;
     private String isbn;
     private List<String> genres;
+    private int published;
     // private List<String> chapters;
     // private int pages;
 
     public Book() {
-        
+
     }
 
-    public Book(String title, String author, String isbn, List<String> genres) {
+    public Book(String title, String author, String isbn, List<String> genres, int published) {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
         this.genres = genres;
+        this.published = published;
     }
 
     public UUID getId() {
@@ -61,5 +63,11 @@ public class Book {
     }
     public void setGenres(List<String> genres) {
         this.genres = genres;
+    }
+    public int getPublished() {
+        return published;
+    }
+    public void setPublished(int published) {
+        this.published = published;
     }
 }
