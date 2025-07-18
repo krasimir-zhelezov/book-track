@@ -9,4 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface BookRepository extends JpaRepository<Book, UUID> {
     List<Book> findAll();
     Optional<Book> findById(UUID id);
+    List<Book> findByTitleContaining(String title);
 }

@@ -49,4 +49,8 @@ public class BookService {
             })
             .orElse(false);
     }
+
+    public List<Book> searchByTitle(String query) {
+        return bookRepository.findByTitleContaining(query);
+    }
 }
