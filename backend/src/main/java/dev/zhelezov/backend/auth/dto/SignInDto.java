@@ -1,4 +1,4 @@
-package dev.zhelezov.backend.auth;
+package dev.zhelezov.backend.auth.dto;
 
 public class SignInDto {
     private String email;

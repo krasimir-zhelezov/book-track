@@ -1,4 +1,4 @@
-package dev.zhelezov.backend.auth;
+package dev.zhelezov.backend.auth.service;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -7,6 +7,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import dev.zhelezov.backend.auth.dto.SignInDto;
+import dev.zhelezov.backend.auth.dto.SignUpDto;
+import dev.zhelezov.backend.auth.dto.UserDto;
+import dev.zhelezov.backend.auth.model.User;
+import dev.zhelezov.backend.auth.repository.UserRepository;
 
 @Service
 public class AuthService {

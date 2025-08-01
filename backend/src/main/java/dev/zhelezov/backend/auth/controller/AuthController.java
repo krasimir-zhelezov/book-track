@@ -1,4 +1,4 @@
-package dev.zhelezov.backend.auth;
+package dev.zhelezov.backend.auth.controller;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import dev.zhelezov.backend.auth.dto.SignInDto;
+import dev.zhelezov.backend.auth.dto.SignUpDto;
+import dev.zhelezov.backend.auth.dto.UserDto;
+import dev.zhelezov.backend.auth.service.AuthService;
 
 @RestController
 @RequestMapping("api/auth")

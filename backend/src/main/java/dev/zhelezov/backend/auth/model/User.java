@@ -1,4 +1,4 @@
-package dev.zhelezov.backend.auth;
+package dev.zhelezov.backend.auth.model;
 
 import java.util.Collection;
 import java.util.List;
@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import dev.zhelezov.backend.auth.dto.UserDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;

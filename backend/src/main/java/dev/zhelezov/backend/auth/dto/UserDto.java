@@ -1,4 +1,4 @@
-package dev.zhelezov.backend.auth;
+package dev.zhelezov.backend.auth.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
