@@ -15,16 +15,14 @@ import dev.zhelezov.backend.auth.dto.SignInDto;
 import dev.zhelezov.backend.auth.dto.SignUpDto;
 import dev.zhelezov.backend.auth.dto.UserDto;
 import dev.zhelezov.backend.auth.service.AuthService;
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("api/auth")
 public class AuthController {
 
     private final AuthService authService;
-
-    public AuthController(AuthService authService) {
-        this.authService = authService;
-    }
     
     @PostMapping("/sign-in")
     public ResponseEntity<UserDto> signIn(@RequestBody SignInDto signInDto) {

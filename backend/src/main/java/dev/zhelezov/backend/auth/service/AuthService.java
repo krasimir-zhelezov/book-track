@@ -13,18 +13,14 @@ import dev.zhelezov.backend.auth.dto.SignUpDto;
 import dev.zhelezov.backend.auth.dto.UserDto;
 import dev.zhelezov.backend.auth.model.User;
 import dev.zhelezov.backend.auth.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.authenticationManager = authenticationManager;
-    }
 
     public UserDto signUp(SignUpDto signUpDto) {
         return userRepository.save(new User(signUpDto.getEmail(), passwordEncoder.encode(signUpDto.getPassword1()))).toDto();

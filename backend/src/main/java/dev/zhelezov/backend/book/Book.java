@@ -7,8 +7,14 @@ import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Book {
     @Id
     @GeneratedValue
@@ -19,55 +25,13 @@ public class Book {
     private String isbn;
     private List<String> genres;
     private int published;
-    // private List<String> chapters;
-    // private int pages;
 
-    public Book() {
-
-    }
 
     public Book(String title, String author, String isbn, List<String> genres, int published) {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
         this.genres = genres;
-        this.published = published;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-    public void setId(UUID id) {
-        this.id = id;
-    }
-    public String getTitle() {
-        return title;
-    }
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    public String getAuthor() {
-        return author;
-    }
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-    public String getIsbn() {
-        return isbn;
-    }
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-    public List<String> getGenres() {
-        return genres;
-    }
-    public void setGenres(List<String> genres) {
-        this.genres = genres;
-    }
-    public int getPublished() {
-        return published;
-    }
-    public void setPublished(int published) {
         this.published = published;
     }
 }

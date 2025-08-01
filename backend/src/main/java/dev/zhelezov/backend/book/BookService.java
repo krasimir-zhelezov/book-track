@@ -8,16 +8,14 @@ import org.hibernate.annotations.NotFound;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class BookService {
 
     private final ModelMapper modelMapper;
     private final BookRepository bookRepository;
-
-    public BookService(BookRepository bookRepository, ModelMapper modelMapper) {
-        this.bookRepository = bookRepository;
-        this.modelMapper = modelMapper;
-    }
 
     public Book createBook(BookDto bookDto) {
         Book book = modelMapper.map(bookDto, Book.class);
