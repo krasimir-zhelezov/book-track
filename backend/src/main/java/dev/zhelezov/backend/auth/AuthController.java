@@ -27,8 +27,8 @@ public class AuthController {
     }
 
     @PostMapping("/sign-up")
-    public void signUp(@RequestBody SignUpDto signUpDto) {
-        ResponseEntity.ok().body(authService.signUp(signUpDto));
+    public ResponseEntity<User> signUp(@RequestBody SignUpDto signUpDto) {
+        return ResponseEntity.ok().body(authService.signUp(signUpDto));
     }
 
     @GetMapping("/profile")
