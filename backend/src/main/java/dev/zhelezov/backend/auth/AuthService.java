@@ -21,7 +21,7 @@ public class AuthService {
     }
 
     public User signUp(SignUpDto signUpDto) {
-        return userRepository.save(new User(signUpDto.getEmail(), passwordEncoder.encode(signUpDto.getPassword1())));
+        return userRepository.save(new User(signUpDto.getEmail(), passwordEncoder.encode(signUpDto.getPassword1()), "MEMBER"));
     }
 
     public void signIn(SignInDto signInDto) {
@@ -37,7 +37,7 @@ public class AuthService {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         if (authentication.isAuthenticated()) {
-            System.out.println("Logged in as: " + authentication.getName());
+            System.out.println("Signed in as: " + authentication.getName());
         }   
     }
 }
