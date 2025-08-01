@@ -1,6 +1,10 @@
 package dev.zhelezov.backend.auth;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,13 +22,13 @@ public class AuthController {
     }
     
     @PostMapping("/sign-in")
-    public void signIn() {
-
+    public void signIn(@RequestBody SignInDto signInDto) {
+        authService.signIn(signInDto);
     }
 
     @PostMapping("/sign-up")
-    public ResponseEntity<User> signUp(@RequestBody SignUpDto signUpDto) {
-        return ResponseEntity.ok().body(authService.signUp(signUpDto));
+    public void signUp(@RequestBody SignUpDto signUpDto) {
+        ResponseEntity.ok().body(authService.signUp(signUpDto));
     }
 
     @GetMapping("/profile")
@@ -32,3 +36,5 @@ public class AuthController {
 
     }
 }
+
+
