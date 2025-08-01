@@ -20,8 +20,8 @@ public class AuthService {
         this.authenticationManager = authenticationManager;
     }
 
-    public User signUp(SignUpDto signUpDto) {
-        return userRepository.save(new User(signUpDto.getEmail(), passwordEncoder.encode(signUpDto.getPassword1()), "MEMBER"));
+    public UserDto signUp(SignUpDto signUpDto) {
+        return userRepository.save(new User(signUpDto.getEmail(), passwordEncoder.encode(signUpDto.getPassword1()))).toDto();
     }
 
     public void signIn(SignInDto signInDto) {

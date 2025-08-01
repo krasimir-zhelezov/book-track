@@ -29,17 +29,20 @@ public class User implements UserDetails {
     
     private String email;
     private String password;
-    private String role;
+    //private String role;
 
-    public User(String email, String password, String role) {
+    public User(String email, String password) {
         this.email = email;
         this.password = password;
-        this.role = role;
+    }
+
+    public UserDto toDto() {
+        return new UserDto(email, password);
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role));
+        return List.of(new SimpleGrantedAuthority("MEMBER"));
     }
 
     @Override
