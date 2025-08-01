@@ -27,8 +27,14 @@ public class AuthController {
     }
     
     @PostMapping("/sign-in")
-    public void signIn(@RequestBody SignInDto signInDto) {
-        authService.signIn(signInDto);
+    public ResponseEntity<UserDto> signIn(@RequestBody SignInDto signInDto) {
+        UserDto dto = authService.signIn(signInDto);
+
+        if (dto == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok().body(dto);
     }
 
     @PostMapping("/sign-up")

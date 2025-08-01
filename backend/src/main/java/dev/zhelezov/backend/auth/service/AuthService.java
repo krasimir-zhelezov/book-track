@@ -30,7 +30,7 @@ public class AuthService {
         return userRepository.save(new User(signUpDto.getEmail(), passwordEncoder.encode(signUpDto.getPassword1()))).toDto();
     }
 
-    public void signIn(SignInDto signInDto) {
+    public UserDto signIn(SignInDto signInDto) {
         Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
                 signInDto.getEmail(),
@@ -40,10 +40,14 @@ public class AuthService {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        // UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         if (authentication.isAuthenticated()) {
             System.out.println("Signed in as: " + authentication.getName());
+
+            return userRepository.findByEmail(authentication.getName()).get().toDto();
         }   
+
+        return null;
     }
 }
