@@ -42,4 +42,21 @@ public class AuthService {
 
         return new UserDto(userDetails.getUsername(), jwt);
     }
+
+    public UserDto profile() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        System.out.println(authentication.getPrincipal().toString());
+
+        if (authentication.getPrincipal() instanceof User) {
+            return ((User) authentication.getPrincipal()).toDto();
+        }
+
+        if (authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            return new UserDto(userDetails.getUsername(), null); // No JWT needed here
+        }
+
+        return null;
+    }
 }

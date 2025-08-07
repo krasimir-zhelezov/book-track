@@ -12,6 +12,7 @@ import dev.zhelezov.backend.auth.dto.SignInDto;
 import dev.zhelezov.backend.auth.dto.SignUpDto;
 import dev.zhelezov.backend.auth.dto.UserDto;
 import dev.zhelezov.backend.auth.service.AuthService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -21,6 +22,7 @@ public class AuthController {
 
     private final AuthService authService;
     
+    @SecurityRequirements()
     @PostMapping("/sign-in")
     public ResponseEntity<UserDto> signIn(@RequestBody SignInDto signInDto) {
         try {
@@ -32,14 +34,15 @@ public class AuthController {
         }
     }
 
+    @SecurityRequirements()
     @PostMapping("/sign-up")
     public ResponseEntity<UserDto> signUp(@RequestBody SignUpDto signUpDto) {
         return ResponseEntity.ok().body(authService.signUp(signUpDto));
     }
 
     @GetMapping("/profile")
-    public void profile() {
-
+    public ResponseEntity<UserDto> profile() {
+        return ResponseEntity.ok().body(authService.profile());
     }
 }
 
