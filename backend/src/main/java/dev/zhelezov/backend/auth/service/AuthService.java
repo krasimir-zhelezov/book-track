@@ -1,5 +1,7 @@
 package dev.zhelezov.backend.auth.service;
 
+import org.hibernate.NonUniqueResultException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -7,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import dev.zhelezov.backend.auth.dto.SignInDto;
 import dev.zhelezov.backend.auth.dto.SignUpDto;
@@ -26,6 +29,9 @@ public class AuthService {
     private final JwtUtil jwtUtil;
 
     public UserDto signUp(SignUpDto signUpDto) {
+        if (signUpDto.getPassword1() != signUpDto.getPassword2()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Passwords do not match");
+        }
         User user = userRepository.save(new User(signUpDto.getEmail(), passwordEncoder.encode(signUpDto.getPassword1())));
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(signUpDto.getEmail());
