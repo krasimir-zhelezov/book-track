@@ -1,6 +1,5 @@
 package dev.zhelezov.backend.auth.service;
 
-import org.hibernate.NonUniqueResultException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,7 +31,11 @@ public class AuthService {
         if (!signUpDto.getPassword1().equals(signUpDto.getPassword2())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Passwords do not match");
         }
-        User user = userRepository.save(new User(signUpDto.getEmail(), passwordEncoder.encode(signUpDto.getPassword1())));
+        try {
+            User user = userRepository.save(new User(signUpDto.getEmail(), passwordEncoder.encode(signUpDto.getPassword1())));
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already exists");
+        }
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(signUpDto.getEmail());
         final String jwt = jwtUtil.generateToken(userDetails);
