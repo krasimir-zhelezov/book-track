@@ -32,8 +32,8 @@ public class AuthController {
             AuthDto dto = authService.signIn(signInDto);
 
             return ResponseEntity.ok().body(dto);
-        } catch (UsernameNotFoundException e) {
-            return ResponseEntity.notFound().build();
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
         }
     }
 

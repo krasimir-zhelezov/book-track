@@ -47,12 +47,16 @@ public class AuthService {
     }
 
     public AuthDto signIn(SignInDto signInDto) {
-        authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(
-                signInDto.getEmail(), 
-                signInDto.getPassword()
-            )
-        );
+        try {
+            authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                    signInDto.getEmail(), 
+                    signInDto.getPassword()
+                )
+            );
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
+        }
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(signInDto.getEmail());
         final String jwt = jwtUtil.generateToken(userDetails);
