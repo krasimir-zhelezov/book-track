@@ -1,8 +1,8 @@
 package dev.zhelezov.backend.auth.controller;
 
-import org.hibernate.NonUniqueResultException;
+import java.util.function.Supplier;
+
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,29 +28,28 @@ public class AuthController {
     @SecurityRequirements()
     @PostMapping("/sign-in")
     public ResponseEntity<?> signIn(@RequestBody SignInDto signInDto) {
-        try {
-            AuthDto dto = authService.signIn(signInDto);
-
-            return ResponseEntity.ok().body(dto);
-        } catch (ResponseStatusException e) {
-            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
-        }
+        return handleAuthRequest(() -> authService.signIn(signInDto));
     }
 
     @SecurityRequirements()
     @PostMapping("/sign-up")
     public ResponseEntity<?> signUp(@RequestBody SignUpDto signUpDto) {
-        try {
-            return ResponseEntity.ok().body(authService.signUp(signUpDto));
-        } catch (ResponseStatusException e) {
-            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
-        }
+        return handleAuthRequest(() -> authService.signUp(signUpDto));
     }
+
 
     @GetMapping("/profile")
     public ResponseEntity<UserDto> profile() {
         return ResponseEntity.ok().body(authService.profile());
     }
+
+    private ResponseEntity<?> handleAuthRequest(Supplier<AuthDto> authAction) {
+    try {
+        return ResponseEntity.ok().body(authAction.get());
+    } catch (ResponseStatusException e) {
+        return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
+    }
+}
 }
 
 
