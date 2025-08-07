@@ -26,7 +26,12 @@ public class AuthService {
     private final JwtUtil jwtUtil;
 
     public UserDto signUp(SignUpDto signUpDto) {
-        return userRepository.save(new User(signUpDto.getEmail(), passwordEncoder.encode(signUpDto.getPassword1()))).toDto();
+        User user = userRepository.save(new User(signUpDto.getEmail(), passwordEncoder.encode(signUpDto.getPassword1())));
+
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(signUpDto.getEmail());
+        final String jwt = jwtUtil.generateToken(userDetails);
+
+        return new UserDto(userDetails.getUsername(), jwt);
     }
 
     public UserDto signIn(SignInDto signInDto) {
