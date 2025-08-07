@@ -43,7 +43,7 @@ public class User implements UserDetails {
     }
 
     public UserDto toDto() {
-        return new UserDto(email, password);
+        return new UserDto(email);
     }
 
     @Override

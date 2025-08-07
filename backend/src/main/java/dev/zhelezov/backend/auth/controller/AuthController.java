@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import dev.zhelezov.backend.auth.dto.AuthDto;
 import dev.zhelezov.backend.auth.dto.SignInDto;
 import dev.zhelezov.backend.auth.dto.SignUpDto;
 import dev.zhelezov.backend.auth.dto.UserDto;
@@ -26,9 +27,9 @@ public class AuthController {
     
     @SecurityRequirements()
     @PostMapping("/sign-in")
-    public ResponseEntity<UserDto> signIn(@RequestBody SignInDto signInDto) {
+    public ResponseEntity<?> signIn(@RequestBody SignInDto signInDto) {
         try {
-            UserDto dto = authService.signIn(signInDto);
+            AuthDto dto = authService.signIn(signInDto);
 
             return ResponseEntity.ok().body(dto);
         } catch (UsernameNotFoundException e) {

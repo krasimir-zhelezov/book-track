@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import dev.zhelezov.backend.auth.dto.AuthDto;
 import dev.zhelezov.backend.auth.dto.SignInDto;
 import dev.zhelezov.backend.auth.dto.SignUpDto;
 import dev.zhelezov.backend.auth.dto.UserDto;
@@ -27,12 +28,14 @@ public class AuthService {
     private final CustomUserDetailsService userDetailsService;
     private final JwtUtil jwtUtil;
 
-    public UserDto signUp(SignUpDto signUpDto) {
+    public AuthDto signUp(SignUpDto signUpDto) {
+        User user;
+
         if (!signUpDto.getPassword1().equals(signUpDto.getPassword2())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Passwords do not match");
         }
         try {
-            User user = userRepository.save(new User(signUpDto.getEmail(), passwordEncoder.encode(signUpDto.getPassword1())));
+            user = userRepository.save(new User(signUpDto.getEmail(), passwordEncoder.encode(signUpDto.getPassword1())));
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already exists");
         }
@@ -40,10 +43,10 @@ public class AuthService {
         final UserDetails userDetails = userDetailsService.loadUserByUsername(signUpDto.getEmail());
         final String jwt = jwtUtil.generateToken(userDetails);
 
-        return new UserDto(userDetails.getUsername(), jwt);
+        return new AuthDto(user.toDto(), jwt);
     }
 
-    public UserDto signIn(SignInDto signInDto) {
+    public AuthDto signIn(SignInDto signInDto) {
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
                 signInDto.getEmail(), 
@@ -54,7 +57,7 @@ public class AuthService {
         final UserDetails userDetails = userDetailsService.loadUserByUsername(signInDto.getEmail());
         final String jwt = jwtUtil.generateToken(userDetails);
 
-        return new UserDto(userDetails.getUsername(), jwt);
+        return new AuthDto(new UserDto(userDetails.getUsername()), jwt);
     }
 
     public UserDto profile() {
@@ -68,7 +71,7 @@ public class AuthService {
 
         if (authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            return new UserDto(userDetails.getUsername(), null); // No JWT needed here
+            return new UserDto(userDetails.getUsername());
         }
 
         return null;
