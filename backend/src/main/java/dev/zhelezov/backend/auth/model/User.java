@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import dev.zhelezov.backend.auth.dto.UserDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -35,20 +37,23 @@ public class User implements UserDetails {
     @Column(nullable = false, unique = true)
     private String email;
     private String password;
-    //private String role;
 
-    public User(String email, String password) {
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    public User(String email, String password, Role role) {
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 
     public UserDto toDto() {
-        return new UserDto(email);
+        return new UserDto(email, role.name());
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("MEMBER"));
+        return List.of(new SimpleGrantedAuthority(this.role.name()));
     }
 
     @Override

@@ -1,12 +1,14 @@
 package dev.zhelezov.backend.auth.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,9 +16,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import dev.zhelezov.backend.auth.dto.AuthDto;
+import dev.zhelezov.backend.auth.dto.CustomUserDetails;
 import dev.zhelezov.backend.auth.dto.SignInDto;
 import dev.zhelezov.backend.auth.dto.SignUpDto;
 import dev.zhelezov.backend.auth.dto.UserDto;
+import dev.zhelezov.backend.auth.model.Role;
 import dev.zhelezov.backend.auth.model.User;
 import dev.zhelezov.backend.auth.repository.UserRepository;
 import dev.zhelezov.backend.config.JwtUtil;
@@ -38,12 +42,12 @@ public class AuthService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Passwords do not match");
         }
         try {
-            user = userRepository.save(new User(signUpDto.getEmail(), passwordEncoder.encode(signUpDto.getPassword1())));
+            user = userRepository.save(new User(signUpDto.getEmail(), passwordEncoder.encode(signUpDto.getPassword1()), Role.MEMBER));
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already exists");
         }
 
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(signUpDto.getEmail());
+        final CustomUserDetails userDetails = userDetailsService.loadUserByUsername(signUpDto.getEmail());
         final String jwt = jwtUtil.generateToken(userDetails);
 
         return new AuthDto(user.toDto(), jwt);
@@ -61,10 +65,10 @@ public class AuthService {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
         }
 
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(signInDto.getEmail());
+        final CustomUserDetails userDetails = userDetailsService.loadUserByUsername(signInDto.getEmail());
         final String jwt = jwtUtil.generateToken(userDetails);
 
-        return new AuthDto(new UserDto(userDetails.getUsername()), jwt);
+        return new AuthDto(new UserDto(userDetails.getUsername(), userDetails.getRoles().get(0)), jwt);
     }
 
     public UserDto profile() {
@@ -78,9 +82,9 @@ public class AuthService {
             return ((User) authentication.getPrincipal()).toDto();
         }
 
-        if (authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            return new UserDto(userDetails.getUsername());
+        if (authentication.getPrincipal() instanceof CustomUserDetails) {
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            return new UserDto(userDetails.getUsername(), userDetails.getRoles().get(0));
         }
 
         return null;

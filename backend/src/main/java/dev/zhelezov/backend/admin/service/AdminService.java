@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import dev.zhelezov.backend.auth.dto.AuthDto;
 import dev.zhelezov.backend.auth.dto.UserDto;
 import dev.zhelezov.backend.auth.model.User;
 import dev.zhelezov.backend.auth.repository.UserRepository;
