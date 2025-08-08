@@ -39,11 +39,11 @@ public class AuthController {
 
 
     @GetMapping("/profile")
-    public ResponseEntity<UserDto> profile() {
-        return ResponseEntity.ok().body(authService.profile());
+    public ResponseEntity<?> profile() {
+        return handleAuthRequest(() -> authService.profile());
     }
 
-    private ResponseEntity<?> handleAuthRequest(Supplier<AuthDto> authAction) {
+    private ResponseEntity<?> handleAuthRequest(Supplier<?> authAction) {
     try {
         return ResponseEntity.ok().body(authAction.get());
     } catch (ResponseStatusException e) {

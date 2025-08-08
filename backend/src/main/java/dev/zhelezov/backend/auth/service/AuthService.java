@@ -1,6 +1,7 @@
 package dev.zhelezov.backend.auth.service;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -67,7 +68,9 @@ public class AuthService {
     public UserDto profile() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        System.out.println(authentication.getPrincipal().toString());
+        if (authentication instanceof AnonymousAuthenticationToken) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
 
         if (authentication.getPrincipal() instanceof User) {
             return ((User) authentication.getPrincipal()).toDto();
