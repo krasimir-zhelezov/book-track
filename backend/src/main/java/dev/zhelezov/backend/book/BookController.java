@@ -13,6 +13,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RestController
 @RequestMapping("api/books")
 @RequiredArgsConstructor
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class BookController {
 
     private final BookService bookService;
@@ -57,6 +59,7 @@ public class BookController {
         return bookService.deleteBookById(id) ?  ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping("/searchByTitle/{query}")
     public ResponseEntity<List<Book>> searchByTitle(@PathVariable String query) {
         return ResponseEntity.ok().body(bookService.searchByTitle(query));
