@@ -89,4 +89,8 @@ public class AuthService {
 
         return null;
     }
+
+    public List<UserDto> getUsers() {
+        return userRepository.findAll().stream().map(User::toDto).toList();
+    }
 }
