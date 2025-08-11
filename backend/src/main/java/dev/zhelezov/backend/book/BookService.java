@@ -2,6 +2,7 @@ package dev.zhelezov.backend.book;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
@@ -70,5 +71,14 @@ public class BookService {
 
         user.addBookRead(book);
         userRepository.save(user);
+    }
+
+    public Set<Book> completedBooks() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        User user = userRepository.findByEmail(userDetails.getUsername()).get();
+
+        return user.getBooksRead();
     }
 }

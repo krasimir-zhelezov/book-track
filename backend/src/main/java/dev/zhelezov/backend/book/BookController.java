@@ -1,6 +1,7 @@
 package dev.zhelezov.backend.book;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
@@ -71,4 +72,11 @@ public class BookController {
             return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
         }
     }
+
+    @PreAuthorize("permitAll()")
+    @GetMapping("/completed")
+    public ResponseEntity<Set<Book>> completedBooks() {
+        return ResponseEntity.ok().body(bookService.completedBooks());
+    }
+    
 }
