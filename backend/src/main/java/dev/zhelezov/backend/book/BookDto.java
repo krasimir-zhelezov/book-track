@@ -1,5 +1,8 @@
 package dev.zhelezov.backend.book;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -15,4 +18,5 @@ public class BookDto {
     private String isbn;
     private List<String> genres;
     private int published;
+    private LocalDateTime createdAt;
 }

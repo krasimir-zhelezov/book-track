@@ -1,9 +1,13 @@
 package dev.zhelezov.backend.book;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import jakarta.annotation.Generated;
+import org.hibernate.annotations.CreationTimestamp;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -25,6 +29,9 @@ public class Book {
     private String isbn;
     private List<String> genres;
     private int published;
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
 
 
     public Book(String title, String author, String isbn, List<String> genres, int published) {
