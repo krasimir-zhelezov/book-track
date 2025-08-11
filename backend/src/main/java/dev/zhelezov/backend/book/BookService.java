@@ -62,14 +62,19 @@ public class BookService {
 
     public void readBook(UUID bookId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        User user = userRepository.findByEmail(userDetails.getUsername()).get();
+        User user = userRepository.findByEmail(userDetails.getUsername())
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
         Book book = bookRepository.findById(bookId)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
 
-        user.addBookRead(book);
+        if (user.getBooksRead().contains(book)) {
+            user.removeBookRead(book);
+        } else {
+            user.addBookRead(book);
+        }
+        
         userRepository.save(user);
     }
 
