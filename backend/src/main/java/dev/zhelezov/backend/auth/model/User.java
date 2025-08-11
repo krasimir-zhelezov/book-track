@@ -1,9 +1,11 @@
 package dev.zhelezov.backend.auth.model;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -41,6 +43,10 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+
     public User(String email, String password, Role role) {
         this.email = email;
         this.password = password;
@@ -48,7 +54,7 @@ public class User implements UserDetails {
     }
 
     public UserDto toDto() {
-        return new UserDto(email, role.name());
+        return new UserDto(email, role.name(), createdAt);
     }
 
     @Override

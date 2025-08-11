@@ -67,8 +67,10 @@ public class AuthService {
 
         final CustomUserDetails userDetails = userDetailsService.loadUserByUsername(signInDto.getEmail());
         final String jwt = jwtUtil.generateToken(userDetails);
+        User user = userRepository.findByEmail(userDetails.getUsername())
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
-        return new AuthDto(new UserDto(userDetails.getUsername(), userDetails.getRoles().get(0)), jwt);
+        return new AuthDto(user.toDto(), jwt);
     }
 
     public UserDto profile() {
@@ -84,7 +86,9 @@ public class AuthService {
 
         if (authentication.getPrincipal() instanceof CustomUserDetails) {
             CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-            return new UserDto(userDetails.getUsername(), userDetails.getRoles().get(0));
+            User user = userRepository.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+            return user.toDto();
         }
 
         return null;
