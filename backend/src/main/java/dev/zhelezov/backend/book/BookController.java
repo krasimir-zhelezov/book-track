@@ -17,27 +17,39 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("api/books")
 @RequiredArgsConstructor
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+@Tag(name = "Book Management", description = "Endpoints for managing books")
 public class BookController {
 
     private final BookService bookService;
 
     @PostMapping("/")
+    @Operation(summary = "Create book", description = "Returns the created book")
+    @ApiResponse(responseCode = "200", description = "Book created successfully")
     public ResponseEntity<Book> createBook(@RequestBody BookDto bookDto) {
         return ResponseEntity.ok().body(bookService.createBook(bookDto));
     }  
 
     @GetMapping("/")
+    @Operation(summary = "Get all books", description = "Returns a list of all books")
+    @ApiResponse(responseCode = "200", description = "Books retrieved successfully")
     public ResponseEntity<List<Book>> getAllBooks() {
         return ResponseEntity.ok().body(bookService.getAllBooks());
     }
     
     @GetMapping("/{id}")
+    @Operation(summary = "Get book by id", description = "Returns the book with the specified id")
+    @ApiResponse(responseCode = "200", description = "Book found")
+    @ApiResponse(responseCode = "404", description = "Book not found")
     public ResponseEntity<Book> getBookById(@PathVariable UUID id) {
         return bookService.getBookById(id)
             .map(ResponseEntity::ok)
@@ -45,6 +57,9 @@ public class BookController {
     }
     
     @PutMapping("/{id}")
+    @Operation(summary = "Update book by id", description = "Updates and returns the book with the new values")
+    @ApiResponse(responseCode = "200", description = "Book updated successfully")
+    @ApiResponse(responseCode = "404", description = "Book not found")
     public ResponseEntity<Book> updateBookById(@PathVariable UUID id, @RequestBody BookDto bookDto) {
         return bookService.updateBookById(id, bookDto)
             .map(ResponseEntity::ok)
@@ -52,18 +67,27 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Delete book by id", description = "Deletes the book with the specified id")
+    @ApiResponse(responseCode = "200", description = "Book deleted successfully")
+    @ApiResponse(responseCode = "404", description = "Book not found")
     public ResponseEntity<Void> deleteBookById(@PathVariable UUID id) {
         return bookService.deleteBookById(id) ?  ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 
     @PreAuthorize("permitAll()")
     @GetMapping("/searchByTitle/{query}")
+    @Operation(summary = "Search book by title", description = "Returns a list of books that match the title query")
+    @ApiResponse(responseCode = "200", description = "Found books matching the title query")
     public ResponseEntity<List<Book>> searchByTitle(@PathVariable String query) {
         return ResponseEntity.ok().body(bookService.searchByTitle(query));
     }
 
     @PreAuthorize("permitAll()")
     @GetMapping("/read/{bookId}")
+    @Operation(summary = "Read book by id", description = "Returns the specified book")
+    @ApiResponse(responseCode = "200", description = "Book found")
+    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content())
+    @ApiResponse(responseCode = "404", description = "Book not found")
     public ResponseEntity<?> readBook(@PathVariable UUID bookId) {
         try {
             bookService.readBook(bookId);
@@ -75,6 +99,9 @@ public class BookController {
 
     @PreAuthorize("permitAll()")
     @GetMapping("/completed")
+    @Operation(summary = "Get completed books", description = "Return a list of completed books")
+    @ApiResponse(responseCode = "200", description = "Books found")
+    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content())
     public ResponseEntity<Set<Book>> completedBooks() {
         return ResponseEntity.ok().body(bookService.completedBooks());
     }
