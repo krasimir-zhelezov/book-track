@@ -1,15 +1,16 @@
 <div>
     <form>
-        <div class="mt-5">
+        <div class="mt-5 ml-5">
             <ui-label for="email">Email</ui-label>
             <!-- <input id="email" type="email" [(ngModel)]="email" name="email"> -->
             <ui-input placeholder="email@example.com"></ui-input>
         </div>
-        <div class="mt-5">
+        <div class="mt-5 ml-5">
             <ui-label for="password">Password</ui-label>
             <ui-input type="password"></ui-input>
         </div>
-
-        <button (click)="signIn()" type="submit">Sign In</button>
+        <div class="mt-5 ml-5">
+            <ui-button (click)="signIn()" type="submit">Sign In</ui-button>
+        </div>
     </form>
 </div>
