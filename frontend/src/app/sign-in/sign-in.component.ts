@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgModel } from '@angular/forms';
 import { InputComponent } from '../shared/components/input/input.component';
 import { LabelComponent } from '../shared/components/label/label.component';
 import { ButtonComponent } from '../shared/components/button/button.component';
