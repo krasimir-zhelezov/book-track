@@ -1,13 +1,15 @@
-<form>
-    <div>
-        <label for="email">Email</label>
-        <!-- <input id="email" type="email" [(ngModel)]="email" name="email"> -->
-        <ui-input></ui-input>
-    </div>
-    <div>
-        <label for="password">Password</label>
-        <ui-input></ui-input>
-    </div>
+<div>
+    <form>
+        <div class="mt-5">
+            <label for="email">Email</label>
+            <!-- <input id="email" type="email" [(ngModel)]="email" name="email"> -->
+            <ui-input></ui-input>
+        </div>
+        <div class="mt-5">
+            <label for="password">Password</label>
+            <ui-input></ui-input>
+        </div>
 
-    <button (click)="signIn()" type="submit">Sign In</button>
-</form>
+        <button (click)="signIn()" type="submit">Sign In</button>
+    </form>
+</div>
