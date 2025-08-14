@@ -1,11 +1,12 @@
 <form>
     <div>
         <label for="email">Email</label>
-        <input id="email" type="email" [(ngModel)]="email" name="email">
+        <!-- <input id="email" type="email" [(ngModel)]="email" name="email"> -->
+        <ui-input></ui-input>
     </div>
     <div>
         <label for="password">Password</label>
-        <input id="password" type="password" [(ngModel)]="password" name="password">
+        <ui-input></ui-input>
     </div>
 
     <button (click)="signIn()" type="submit">Sign In</button>
