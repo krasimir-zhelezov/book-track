@@ -10,4 +10,9 @@ import { FormsModule } from '@angular/forms';
 export class SignInComponent {
   email: string = '';
   password: string = '';
+
+  signIn() {
+    console.log('Email:', this.email);
+    console.log('Password:', this.password);
+  }
 }
