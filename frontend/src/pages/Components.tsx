@@ -3,7 +3,7 @@ import Button from "../components/Button";
 export default function Components() {
     return (
         <>
-            <Button></Button>
+            <Button>Text</Button>
         </>
     )
     
