@@ -9,7 +9,7 @@ export default function SignUp() {
 
                 <div className="flex flex-col mt-5 w-full">
                     <label>Your name</label>
-                    <Input/>
+                    <Input placeholder="First and last name"/>
                 </div>
 
                 <div className="flex flex-col mt-5 w-full">
@@ -19,11 +19,11 @@ export default function SignUp() {
 
                 <div className="flex flex-col mt-5 w-full">
                     <label>Password</label>
-                    <Input/>
+                    <Input type="password" placeholder="at least 8 characters"/>
                 </div>
                 <div className="flex flex-col mt-5 w-full">
                     <label>Re-enter password</label>
-                    <Input/>
+                    <Input type="password"/>
                 </div>
 
                 <div className="flex flex-col mt-5 w-full">
