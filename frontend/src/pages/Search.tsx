@@ -1,5 +1,4 @@
 import { useSearchParams } from "react-router-dom";
-import Button from "../components/Button";
 
 export default function Search() {
     const [searchParams] = useSearchParams();
