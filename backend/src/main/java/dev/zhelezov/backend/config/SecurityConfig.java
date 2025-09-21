@@ -50,7 +50,8 @@ public class SecurityConfig {
                                         "/swagger-ui.html",
                                         "/webjars/**",
                                         "/favicon.ico",
-                                        "/api/auth/**"
+                                        "/api/auth/**",
+                                        "/api/books/searchByTitle/**"
                                 ).permitAll()
                                 .anyRequest().authenticated()
                 )
