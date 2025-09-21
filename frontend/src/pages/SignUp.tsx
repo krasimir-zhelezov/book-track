@@ -29,6 +29,8 @@ export default function SignUp() {
                 <div className="flex flex-col mt-5 w-full">
                     <Button>Create your account</Button>
                 </div>
+
+                <p className="mt-5">Already have an account? <a className="text-blue-500 hover:text-blue-600" href="#">Sign In &gt;</a></p>
             </div>
         </div>
         
