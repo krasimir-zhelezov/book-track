@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import Button from "../components/Button";
 
 export default function BookView() {
     const { id } = useParams();
@@ -8,7 +9,10 @@ export default function BookView() {
             <div className="flex flex-col w-2/3">
                 <h1 className="font-bold text-3xl text-left">Book Title</h1>
 
+                <div className="flex flex-row w-full items-end justify-between">
                 <img className="w-70 h-105" src="https://placehold.co/70x105" alt="Book Cover"></img>
+                <Button variant="secondary">Add to history</Button>
+                </div>
 
                 <p className="text-gray-700 text-lg mt-5 text-left">This is book description. This is book description. This is book description. This is book description. This is book description. This is book description. This is book description. This is book description. This is book description. This is book description. This is book description. This is book description. This is book description. This is book description. This is book description. This is book description. This is book description. This is book description. This is book description. This is book description. This is book description. </p>
 
