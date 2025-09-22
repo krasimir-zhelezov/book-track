@@ -47,6 +47,7 @@ public class BookController {
         return ResponseEntity.ok().body(bookService.getAllBooks());
     }
     
+    @PreAuthorize("permitAll()")
     @GetMapping("/{id}")
     @Operation(summary = "Get book by id", description = "Returns the book with the specified id")
     @ApiResponse(responseCode = "200", description = "Book found")
