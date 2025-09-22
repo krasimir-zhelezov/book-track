@@ -107,4 +107,9 @@ public class BookController {
         return ResponseEntity.ok().body(bookService.completedBooks());
     }
     
+    @PostMapping("/generate")
+    public ResponseEntity<List<Book>> generate(@RequestParam int number) {
+        return ResponseEntity.ok().body(bookService.generate(number));
+    }
+    
 }

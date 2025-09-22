@@ -1,7 +1,9 @@
 package dev.zhelezov.backend.book;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
@@ -11,6 +13,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import com.github.javafaker.Faker;
 
 import dev.zhelezov.backend.auth.dto.CustomUserDetails;
 import dev.zhelezov.backend.auth.model.User;
@@ -24,6 +28,8 @@ public class BookService {
     private final ModelMapper modelMapper;
     private final BookRepository bookRepository;
     private final UserRepository userRepository;
+    private final Faker faker;
+    private final Random random;
 
     public Book createBook(BookDto bookDto) {
         Book book = modelMapper.map(bookDto, Book.class);
@@ -85,5 +91,22 @@ public class BookService {
         User user = userRepository.findByEmail(userDetails.getUsername()).get();
 
         return user.getBooksRead();
+    }
+
+    public List<Book> generate(int number) {
+        List<Book> generatedBooks = new ArrayList<>();
+
+        for (int i = 0; i < number; i++) {
+            Book book = new Book(
+                faker.book().title(),
+                faker.book().author(),
+                faker.code().isbn13(),
+                List.of(faker.book().genre()),
+                1400 + random.nextInt(625)
+            );
+            generatedBooks.add(book);
+            bookRepository.save(book);
+        }
+        return generatedBooks;
     }
 }
