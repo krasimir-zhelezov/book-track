@@ -6,7 +6,7 @@
 * unread book if it's already read
 
 ### /api/book/isCompleted/{bookId}
-* return true/false if a book is already completed
+* ~~return true/false if a book is already completed~~
 
 ### /api/book/search/{query}
 * improve title search
