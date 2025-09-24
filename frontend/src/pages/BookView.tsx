@@ -1,26 +1,36 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Button from "../components/Button";
 import { useEffect, useState } from "react";
-import { getBookById } from "../services/bookService";
+import { getBookById, readBookById } from "../services/bookService";
 import type Book from "../types/book";
 
 export default function BookView() {
     const { id } = useParams();
     const [book, setBook] = useState<Book | null>(null);
-    
-    useEffect(() => {
-        fetchBookById(id!);
-    }, [id]);
+    const navigate = useNavigate();
 
-    const fetchBookById = async (id: string) => {
+    useEffect(() => {
+        const fetchBookById = async (id: string) => {
+            try {
+                const data = await getBookById(id);
+                setBook(data);
+                console.log(data);
+            } catch (error) {
+                console.error("Get book failed", error);
+            }
+        };
+
+        fetchBookById(id!);
+    }, [id, navigate]);
+
+    const readBook = async (id: string) => {
         try {
-            const data = await getBookById(id);
-            setBook(data);
+            const data = await readBookById(id);
             console.log(data);
         } catch (error) {
-            console.error("Get book failed", error);
+            console.error("Read book failed", error);
         }
-    }
+    };
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen text-center">
@@ -30,7 +40,7 @@ export default function BookView() {
                 <div className="flex flex-row w-full items-end justify-between">
                     <img className="w-70 h-105" src="https://placehold.co/70x105" alt="Book Cover"></img>
                     <div className="w-1/4">
-                        <Button variant="secondary">Add to history</Button>
+                        <Button variant="secondary" onClick={() => readBook(id!)}>Add to history</Button>
                     </div>
                 </div>
 

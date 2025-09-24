@@ -10,3 +10,8 @@ export const getBookById = async (bookId: string): Promise<Book> => {
     const response = await api.get<Book>(`/books/${bookId}`);
     return response.data;
 }
+
+export const readBookById = async (bookId: string): Promise<Book> => {
+    const response = await api.get<Book>(`/books/read/${bookId}`);
+    return response.data;
+}
