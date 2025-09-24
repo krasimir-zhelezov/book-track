@@ -1,13 +1,18 @@
 import axios from "axios";
 
 const isTokenValid = (token: string) => {
-  try {
-    const { exp } = JSON.parse(atob(token.split(".")[1]));
-    return exp * 1000 > Date.now();
-  } catch {
-    return false;
-  }
+    try {
+        const { exp } = JSON.parse(atob(token.split(".")[1]));
+        return exp * 1000 > Date.now();
+    } catch {
+        return false;
+    }
 };
+
+const getValidToken = () => {
+    const token = localStorage.getItem('token');
+    return token && isTokenValid(token) ? token : null;
+}
 
 
 const api = axios.create({
@@ -17,9 +22,9 @@ const api = axios.create({
 
 api.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem('token');
+        const token = getValidToken();
 
-        if (token && isTokenValid(token)) {
+        if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
 
