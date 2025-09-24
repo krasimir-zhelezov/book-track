@@ -1,13 +1,14 @@
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "../components/Button";
 import { useEffect, useState } from "react";
-import { getBookById, readBookById } from "../services/bookService";
+import { getBookById, isBookCompletedById, readBookById } from "../services/bookService";
 import type Book from "../types/book";
 import { isAxiosError } from "axios";
 
 export default function BookView() {
     const { id } = useParams();
     const [book, setBook] = useState<Book | null>(null);
+    const [isRead, setIsRead] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -21,7 +22,18 @@ export default function BookView() {
             }
         };
 
+        const isBookCompleted = async () => {
+            try {
+                const data = await isBookCompletedById(id!);
+                setIsRead(data);
+                console.log(data);
+            } catch (error) {
+                console.error("Read book failed", error);
+            }
+        }
+
         fetchBookById(id!);
+        isBookCompleted();
     }, [id, navigate]);
 
     const readBook = async (id: string) => {
@@ -47,7 +59,10 @@ export default function BookView() {
                 <div className="flex flex-row w-full items-end justify-between">
                     <img className="w-70 h-105" src="https://placehold.co/70x105" alt="Book Cover"></img>
                     <div className="w-1/4">
-                        <Button variant="secondary" onClick={() => readBook(id!)}>Add to history</Button>
+                        <Button variant={isRead ? "primary" : "secondary"} onClick={() => { 
+                            readBook(id!)
+                            setIsRead(!isRead)
+                            }}>{isRead ? "Remove from history" : "Add to history"}</Button>
                     </div>
                 </div>
 

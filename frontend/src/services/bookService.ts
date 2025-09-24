@@ -15,3 +15,8 @@ export const readBookById = async (bookId: string): Promise<Book> => {
     const response = await api.get<Book>(`/books/read/${bookId}`);
     return response.data;
 }
+
+export const isBookCompletedById = async (bookId: string): Promise<boolean> => {
+    const response = await api.get<boolean>(`/books/completed/${bookId}`);
+    return response.data;
+}
