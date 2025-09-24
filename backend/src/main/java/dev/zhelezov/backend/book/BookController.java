@@ -100,7 +100,7 @@ public class BookController {
 
     @PreAuthorize("permitAll()")
     @GetMapping("/completed/{bookId}")
-    @Operation(summary = "Check if book is read by id", description = "Returns the specified book")
+    @Operation(summary = "Check if book is read by id", description = "Returns true or false if the book is read")
     @ApiResponse(responseCode = "200", description = "Book found")
     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content())
     @ApiResponse(responseCode = "404", description = "Book not found")
