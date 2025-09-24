@@ -2,8 +2,8 @@
 
 ## Backend
 ### /api/book/read/{bookId}
-* return proper response
-* unread book if it's already read
+* ~~return proper response~~
+* ~~unread book if it's already read~~
 
 ### /api/book/isCompleted/{bookId}
 * ~~return true/false if a book is already completed~~
