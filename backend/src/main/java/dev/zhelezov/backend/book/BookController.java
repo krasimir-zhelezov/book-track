@@ -92,8 +92,7 @@ public class BookController {
     @ApiResponse(responseCode = "404", description = "Book not found")
     public ResponseEntity<?> readBook(@PathVariable UUID bookId) {
         try {
-            bookService.readBook(bookId);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body(bookService.readBook(bookId));
         } catch (ResponseStatusException e) {
             return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
         }

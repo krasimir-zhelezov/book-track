@@ -66,7 +66,9 @@ public class BookService {
         return bookRepository.findByTitleContaining(query);
     }
 
-    public void readBook(UUID bookId) {
+    public boolean readBook(UUID bookId) {
+        boolean read;
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         User user = userRepository.findByEmail(userDetails.getUsername())
@@ -77,11 +79,15 @@ public class BookService {
 
         if (user.getBooksRead().contains(book)) {
             user.removeBookRead(book);
+            read = false;
         } else {
             user.addBookRead(book);
+            read = true;
         }
         
         userRepository.save(user);
+
+        return read;
     }
 
     public Set<Book> completedBooks() {
