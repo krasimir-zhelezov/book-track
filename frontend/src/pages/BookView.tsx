@@ -3,6 +3,7 @@ import Button from "../components/Button";
 import { useEffect, useState } from "react";
 import { getBookById, readBookById } from "../services/bookService";
 import type Book from "../types/book";
+import { isAxiosError } from "axios";
 
 export default function BookView() {
     const { id } = useParams();
@@ -29,6 +30,12 @@ export default function BookView() {
             console.log(data);
         } catch (error) {
             console.error("Read book failed", error);
+
+            if (isAxiosError(error)) {
+                if (error.response?.status === 401) {
+                    navigate('/auth/sign-in');
+                }
+            }
         }
     };
 
