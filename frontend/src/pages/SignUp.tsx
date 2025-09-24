@@ -54,7 +54,7 @@ export default function SignUp() {
                     </div>
                 </form>
 
-                <p className="mt-5">Already have an account? <a className="text-blue-500 hover:text-blue-600" href="#">Sign In &gt;</a></p>
+                <p className="mt-5">Already have an account? <a className="text-blue-500 hover:text-blue-600" href="#" onClick={() => navigate('/auth/sign-in')}>Sign In &gt;</a></p>
             </div>
         </div>
         

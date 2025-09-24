@@ -43,7 +43,7 @@ export default function SignIn() {
                         <Button type="submit">Sign in</Button>
                     </div>
 
-                    <p className="mt-5">New to Book Track? <a className="text-blue-500 hover:text-blue-600" href="#">Sign Up &gt;</a></p>
+                    <p className="mt-5">New to Book Track? <a className="text-blue-500 hover:text-blue-600" href="#" onClick={() => navigate('/auth/sign-up')}>Sign Up &gt;</a></p>
                 </form>
             </div>
         </div>
