@@ -99,6 +99,20 @@ public class BookController {
     }
 
     @PreAuthorize("permitAll()")
+    @GetMapping("/completed/{bookId}")
+    @Operation(summary = "Check if book is read by id", description = "Returns the specified book")
+    @ApiResponse(responseCode = "200", description = "Book found")
+    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content())
+    @ApiResponse(responseCode = "404", description = "Book not found")
+    public ResponseEntity<?> isBookCompleted(@PathVariable UUID bookId) {
+        try {
+            return ResponseEntity.ok().body(bookService.isBookCompleted(bookId));
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
+        }
+    }
+
+    @PreAuthorize("permitAll()")
     @GetMapping("/completed")
     @Operation(summary = "Get completed books", description = "Return a list of completed books")
     @ApiResponse(responseCode = "200", description = "Books found")
