@@ -1,5 +1,5 @@
-import Input from "./Input";
 import NavItem from "./NavItem";
+import SearchInput from "./SearchInput";
 
 export default function Navbar() {
     return (
@@ -12,7 +12,7 @@ export default function Navbar() {
                 </a>
 
                 <div className="flex mx-4 w-1/3">
-                    <Input placeholder="Search..." />
+                    <SearchInput/>
                 </div>
 
                 <div className="flex space-x-5">
