@@ -7,6 +7,8 @@ export default function SearchInput() {
 
     const handleSearch = () => {
         setQuery("");
+
+        if (!query) return;
         navigate(`/search?q=${query}`);
     };
 
