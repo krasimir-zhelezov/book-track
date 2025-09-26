@@ -16,9 +16,7 @@
 
 ## Frontend
 ### Navbar
-* Home
-* About
 * SignIn/SignOut
-* Search bar
+* ~~Search bar~~
 
 ### Alerts
