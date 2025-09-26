@@ -8,7 +8,7 @@ interface InputProps {
 export default function Input({ type = "text", placeholder="", value, onChange }: InputProps) {
     return (
         <input 
-            className="border border-gray-300 rounded-md px-4 py-2 shadow-md hover:shadow-lg focus:outline-none" 
+            className="border border-gray-300 rounded-md px-4 py-2 shadow-md hover:shadow-lg focus:outline-none w-full" 
             type={type} 
             placeholder={placeholder}
             value={value}

@@ -3,30 +3,26 @@ import NavItem from "./NavItem";
 
 export default function Navbar() {
     return (
-    <nav className="">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href="/" className="flex items-center space-x-5">
-            <img src="" className="" alt="Logo"/>
-            <span className="self-center text-2xl font-semibold whitespace-nowrap">Book Tracker</span>
-        </a>
-        <Input placeholder="Search..."/>
-            <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-search">
-                <ul className="flex flex-row p-4 mt-4 space-x-5 font-medium rounded-lg">
-                    <li>
-                        <NavItem to="/profile" end>Profile</NavItem>
-                    </li>
-                    <li>
-                        <NavItem to="/profile/books" end>Book History</NavItem>
-                    </li>
-                    <li>
-                        <NavItem to="/auth/sign-in" end>Sign in</NavItem>
-                    </li>
-                    <li>
-                        <NavItem to="/auth/sign-out" end>Sign out</NavItem>
-                    </li>
-                </ul>
+        <nav className="fixed top-0 left-0 w-full bg-white shadow">
+            <div className="max-w-screen-xl mx-auto px-4 flex items-center justify-between h-16">
+                
+                <a href="/" className="flex items-center space-x-2">
+                <img src="" className="h-8 w-8" alt="Logo"/>
+                <span className="text-2xl font-semibold">Book Tracker</span>
+                </a>
+
+                <div className="flex mx-4 w-1/3">
+                    <Input placeholder="Search..." />
+                </div>
+
+                <div className="flex space-x-5">
+                    <NavItem to="/profile" end>Profile</NavItem>
+                    <NavItem to="/profile/books" end>Book History</NavItem>
+                    <NavItem to="/auth/sign-in" end>Sign in</NavItem>
+                    <NavItem to="/auth/sign-out" end>Sign out</NavItem>
+                </div>
+
             </div>
-        </div>
-    </nav>
+        </nav>
     )
 }
