@@ -63,7 +63,7 @@ public class BookService {
     }
 
     public List<Book> searchByTitle(String query) {
-        return bookRepository.findByTitleContaining(query);
+        return bookRepository.searchByTitle(query);
     }
 
     public boolean readBook(UUID bookId) {
