@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function SearchInput() {
     const [query, setQuery] = useState("");
+    const navigate = useNavigate();
 
     const handleSearch = () => {
-        console.log("Searching for:", query);
+        setQuery("");
+        navigate(`/search?q=${query}`);
     };
 
     return (
@@ -14,6 +17,7 @@ export default function SearchInput() {
                 placeholder="Search..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={(e) => { if (e.key === "Enter") handleSearch() }}
                 className="w-full pr-10 pl-4 py-2 border border-gray-300 rounded-md shadow-md focus:outline-none"
             />
             <button
