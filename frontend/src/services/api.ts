@@ -9,7 +9,7 @@ const isTokenValid = (token: string) => {
     }
 };
 
-const getValidToken = () => {
+export const getValidToken = () => {
     const token = localStorage.getItem('token');
     return token && isTokenValid(token) ? token : null;
 }

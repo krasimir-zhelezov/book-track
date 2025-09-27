@@ -1,7 +1,20 @@
+import { useEffect, useState } from "react";
 import NavItem from "./NavItem";
 import SearchInput from "./SearchInput";
+import { getValidToken } from "../services/api";
 
 export default function Navbar() {
+    const [isAuthorized, setIsAuthorized] = useState(false);
+    const [token] = useState<string | null>(localStorage.getItem("token"));
+
+    useEffect(() => {
+        const token = getValidToken();
+
+        if (token) {
+            setIsAuthorized(true);
+        }
+    }, [token]);
+
     return (
         <nav className="fixed top-0 left-0 w-full bg-white shadow">
             <div className="max-w-screen-xl mx-auto px-4 flex items-center justify-between h-16">
@@ -18,8 +31,7 @@ export default function Navbar() {
                 <div className="flex space-x-5">
                     <NavItem to="/profile" end>Profile</NavItem>
                     <NavItem to="/profile/books" end>Book History</NavItem>
-                    <NavItem to="/auth/sign-in" end>Sign in</NavItem>
-                    <NavItem to="/auth/sign-out" end>Sign out</NavItem>
+                    {isAuthorized ? <NavItem to="/auth/sign-out" end>Sign out</NavItem> : <NavItem to="/auth/sign-in" end>Sign in</NavItem>}
                 </div>
 
             </div>

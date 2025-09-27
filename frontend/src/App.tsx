@@ -6,6 +6,7 @@ import BookView from './pages/BookView'
 import SignUp from './pages/SignUp'
 import SignIn from './pages/SignIn'
 import Navbar from './components/Navbar'
+import Home from './pages/Home'
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
     <>
       <Navbar/>
       <Routes>
+        <Route path="/" element={<Home/>}></Route>
         <Route path="/search" element={<Search/>}></Route>
         <Route path="/components" element={<Components/>}></Route>
         <Route path="/book/:id" element={<BookView/>}></Route>
