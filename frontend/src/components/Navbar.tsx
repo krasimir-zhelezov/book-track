@@ -20,7 +20,7 @@ export default function Navbar() {
             <div className="max-w-screen-xl mx-auto px-4 flex items-center justify-between h-16">
                 
                 <a href="/" className="flex items-center space-x-2">
-                <img src="" className="h-8 w-8" alt="Logo"/>
+                <img src="/url/to/logo" className="h-8 w-8" alt="Logo"/>
                 <span className="text-2xl font-semibold">Book Tracker</span>
                 </a>
 
