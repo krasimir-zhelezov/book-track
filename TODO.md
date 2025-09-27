@@ -20,3 +20,5 @@
 * ~~Search bar~~
 
 ### Alerts
+
+### Auth Context
