@@ -16,6 +16,7 @@ public class BookDto {
     private String title;
     private String author;
     private String isbn;
+    private String description;
     private List<String> genres;
     private int published;
     private LocalDateTime createdAt;

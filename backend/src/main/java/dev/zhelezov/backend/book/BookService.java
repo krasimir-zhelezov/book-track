@@ -108,7 +108,8 @@ public class BookService {
                 faker.book().author(),
                 faker.code().isbn13(),
                 List.of(faker.book().genre()),
-                1400 + random.nextInt(625)
+                1400 + random.nextInt(625),
+                faker.lorem().paragraph()
             );
             generatedBooks.add(book);
             bookRepository.save(book);
