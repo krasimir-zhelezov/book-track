@@ -26,3 +26,8 @@ export const signUp = async (data: SignUpRequest): Promise <AuthResponse> => {
     const response = await api.post<AuthResponse>("/auth/sign-up", data);
     return response.data;
 }
+
+export const getCurrentUser = async (): Promise<User> => {
+    const response = await api.get<User>("/auth/profile");
+    return response.data;
+}

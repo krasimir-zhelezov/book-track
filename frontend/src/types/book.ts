@@ -5,5 +5,6 @@ export default interface Book {
     isbn: string,
     genres: string[],
     published: number,
-    createdAt: string
+    createdAt: string,
+    description: string
 }
