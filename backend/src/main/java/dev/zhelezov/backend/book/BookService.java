@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.IntStream;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -103,11 +104,16 @@ public class BookService {
         List<Book> generatedBooks = new ArrayList<>();
 
         for (int i = 0; i < number; i++) {
+            List<String> genres = IntStream.range(0, 1 + random.nextInt(5))
+                .mapToObj(genre -> faker.book().genre())
+                .distinct()
+                .toList();
+
             Book book = new Book(
                 faker.book().title(),
                 faker.book().author(),
                 faker.code().isbn13(),
-                List.of(faker.book().genre()),
+                genres,
                 1400 + random.nextInt(625),
                 faker.lorem().paragraph()
             );
