@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Button from "../components/Button";
 import { useEffect, useState } from "react";
 import { getBookById, isBookCompletedById, readBookById } from "../services/bookService";
@@ -79,7 +79,19 @@ export default function BookView() {
                         </tr>
                         <tr>
                         <th className="text-left border-b p-2">Genres:</th>
-                        <td className="text-left border-b p-2">{book?.genres?.join(", ")}</td>
+                        <td className="text-left border-b p-2">
+                            {book?.genres?.map((genre, index) => (
+                                <span key={genre}>
+                                <Link 
+                                    to={`/search?genre=${encodeURIComponent(genre)}`} 
+                                    className="text-blue-600 hover:underline"
+                                >
+                                    {genre}
+                                </Link>
+                                {index < book.genres.length - 1 && ", "}
+                                </span>
+                            ))}
+                        </td>
                         </tr>
                         <tr>
                         <th className="text-left border-b p-2">Published:</th>
